@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+# A simple command line interface for the Transposon Agent and
+# message routing mesh
+
+require 'English'
+require 'transposon'
+require 'transposon/client/examples/command_line_interface'
+
+command_line_arguments = $ARGV
+
+Transposon::Client::Examples::CommandLineInterface.run!(command_line_arguments)
