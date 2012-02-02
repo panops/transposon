@@ -1,0 +1,3 @@
+Unit tests for individual Transposon System components should be placed in here.
+Don't make these too brittle -- use these to ensure APIs are adhered to properly
+and that indivudal components actually do what they advertise to do.

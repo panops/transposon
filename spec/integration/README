@@ -1,0 +1,3 @@
+Integration specifications go in here. Whole system end-to-end tests are good
+candidates for inclusion. Essentially we verify that the use cases for which 
+we've built the transposon system work as expected.
