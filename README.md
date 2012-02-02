@@ -8,7 +8,7 @@ Installation is accomplished by installing the gem 'transposon'.
 
     $ gem install transposon
 
-Once the gem is installed the commaand 'txpsn' will allow you to start, stop, and
+Once the gem is installed the command 'txpsn' will allow you to start, stop, and
 manage the transposon agent.
 
     $ txpsn agent start
