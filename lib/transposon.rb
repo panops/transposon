@@ -9,3 +9,4 @@ end
 require 'transposon/core'
 require 'transposon/agent'
 require 'transposon/client'
+require 'transposon/version'

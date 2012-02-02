@@ -19,8 +19,16 @@ module Transposon
       "1alpha"
     end
     
+    # Retrieve an array of version numbers in order: major, minor, patch
+    # @return [Array[String]] An array of version strings
+    def self.to_standard_version
+      [major, minor, patch]
+    end
+    
+    # Retrieve a version string in a format compliant with the Semantic Versioning Standard
+    # @return [String] A version string
     def self.to_standard_version_s
-      [major, minor, patch].join('.')
+      to_standard_version.join('.')
     end
     
   end
