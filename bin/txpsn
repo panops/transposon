@@ -9,4 +9,5 @@ require 'transposon/client/examples/command_line_interface'
 
 command_line_arguments = $ARGV
 
-Transposon::Client::Examples::CommandLineInterface.run!(command_line_arguments)
+interface = Transposon::Client::Examples::CommandLineInterface.new
+interface.run!(command_line_arguments)
