@@ -1,6 +1,6 @@
 Transposon
 ==========
-A brokerless agent-based message routing and delivery system.
+A brokerless resource-oriented agent-based message routing and delivery system.
 
 Installation and Getting Started
 --------------------------------
