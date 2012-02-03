@@ -40,44 +40,56 @@ resource endpoints, debugging the transposon mesh and agent, and provides helper
 for sending and receiving messages to and from resources within the transposon mesh.
 
 General Architectural Diagram:
+Agents run on Compute resources, they speak to applications via a unix domain socket which
+connect those agents to resources and other agents, either directly or indirectly via network links, serial
+links, SSH links, basically any medium for which an application is written, which interfaces with
+the agent. Applications may export virtual resources to the transposon mesh whose state (which
+drives the state of otehr devices) may be altered via messages from other resources on the transposon
+mesh. Agents are aware on which resources and links messages transit, and they may use things like serial
+links to bypass broken or damaged TCP/IP infrastructure. This architecture allows transposon to route around
+network failures via any available medium -- one of the major issues in designing a system which is supposed
+to configure the network on which it itself runs. By separating the Agent from the Gateway (which does the actual
+transmission via the medium) we enable organizations to create custom media for message transit (one, for example,
+could implement a fiber channel or MPLS gateway applicationfor message transit, even if one was not included with transposon).
 
-       -------------------------------------------------------------------------------------
-       |                Compute Resource                                            ....   |
-       |                                        --------------------------       ----------|
-       | ---------                              | ----------             |<----> |Resource||
-     ,-->| Agent | <--- Unix Domain Socket ---> | | Client | Application |       |--------||
-     | | ---------             |                | ----------             |<----> |Resource||
-    T| |                       |                --------------------------       ----------|
-    C| |                       |                                                      |    | ----------
-    P| |                       |                                                      `----->|Resource|-> ...
-    /| |                       `-------------->          .......                    .....  | ----------
-    I| -------------------------------------------------------------------------------------
-    P|
-     | -------------------------------------------------------------------------------------    
-     | |                Compute Resource                                            ....   |
-     | |                                        --------------------------       ----------|
-     | | ---------                              | ----------             |<----> |Resource||
-     |-->| Agent | <--- Unix Domain Socket ---> | | Client | Application |       |--------||
-     | | ---------             |                | ----------             |<----> |Resource||
-    T| |                       |                --------------------------       ----------|
-    C| |                       |                                                      |    | ----------
-    P| |                       |                                                      `----->|Resource|-> ...
-    /| |                       `-------------->          .......                    .....  | ----------
-    I| -------------------------------------------------------------------------------------
-    P|
-     | -------------------------------------------------------------------------------------
-     | |                Compute Resource                                            ....   |
-     | |                                        --------------------------       ----------|
-     | | ---------                              | ----------             |<----> |Resource||
-     |-->| Agent | <--- Unix Domain Socket ---> | | Client | Application |       |--------||
-     | | ---------             |                | ----------             |<----> |Resource||
-    T| |                       |                --------------------------       ----------|
-    C| |                       |                                                      |    | ----------
-    P| |                       |                                                      `----->|Resource|-> ...
-    /| |                       `-------------->          .......                    .....  | ----------
-    I| -------------------------------------------------------------------------------------
-    P|
-     `-->...................................................................................
+     -------------------------------------------------------------------------------------                    
+     | Compute Resource                                                                  |                     
+     |                                                                            ....   |                     
+     |                                        --------------------------       ----------|     RS232     -------------------      
+     | ---------                              | ----------             |<----> |Resource|--------------->| Switch Resource |
+     | | Agent | <--- Unix Domain Socket ---> | | Client | Application |       |--------||               |    _________    |
+     | ---------             |                | ----------             |<----> |Resource||               |    |R|R|R|R|    |
+     |                       |                --------------------------       ----------|               ------|-|---------- 
+     |                       |                                                       |   |                     | |
+     |                       |                --------------------------             |   | ----------          | |
+     |                       |                | ----------             |              `--->|Resource|-> ...    | |
+     |                       `--------------> | | Client | Application |<------,         | ----------          | | TCP/IPv[4|6]
+     |                                        | ----------             |       |         |      ------------   | |  via Ethernet
+     |                                        --------------------------       `--------------->| Resource |---' |
+     |                                                                                   |      | (NIC)    |     |
+     |                                                   ....                            |      -----------      |
+     |                                                                                   |                       |
+     -------------------------------------------------------------------------------------                       |
+     -------------------------------------------------------------------------------------                       |
+     | Compute Resource                                                                  |                       |
+     |                                                                            ....   |                       |
+     |                                        --------------------------       ----------|                       |
+     | ---------                              | ----------             |<----> |Resource||                       |
+     | | Agent | <--- Unix Domain Socket ---> | | Client | Application |       |--------||                       |
+     | ---------             |                | ----------             |<----> |Resource||                       |
+     |                       |                --------------------------       ----------|                       |
+     |                       |                                                       |   |                       |
+     |                       |                --------------------------             |   | ----------            |
+     |                       |                | ----------             |              `--->|Resource|-> ...      |
+     |                       `--------------> | | Client | Application |<------,         | ----------            |
+     |                                        | ----------             |       |         |      ------------     |
+     |                                        --------------------------       `--------------->| Resource |-----'
+     |                                                                                   |      | (NIC)    |    
+     |                                                   ....                            |      -----------     
+     |                                                                                   |                      
+     -------------------------------------------------------------------------------------                       
+
+                                              ....
 
 Agent Administration
 --------------------
