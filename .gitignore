@@ -5,3 +5,6 @@ Gemfile.lock
 # Build products
 doc
 *.gem
+
+# Temporary files
+*~
