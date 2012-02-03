@@ -4,3 +4,5 @@ module Transposon
   module Agent
   end
 end
+
+require 'transposon/agent/routing_engine'
