@@ -10,3 +10,5 @@ module Transposon
   module Core
   end
 end
+
+require 'transposon/core/models'
