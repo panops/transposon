@@ -8,3 +8,5 @@ module Transposon
     end
   end
 end
+
+require 'transposon/core/models/message'
