@@ -10,3 +10,4 @@ module Transposon
 end
 
 require 'transposon/core/models/message'
+require 'transposon/core/models/route'
