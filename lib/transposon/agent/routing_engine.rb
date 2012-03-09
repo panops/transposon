@@ -1,3 +1,5 @@
+require 'transposon/agent/routing_engine/route_table'
+
 module Transposon
   module Agent
     
@@ -8,6 +10,13 @@ module Transposon
       
       # The route table currently used by the RoutingEngine to route messages
       attr_reader :route_table
+      
+      # Create a new RoutingEngine. This routing engine has an empty RouteTable, unless
+      # one is specified in the options
+      # @option options [RouteTable] :route_table Configure the RoutingEngine to utilize the given RouteTable
+      def initialize(options = Hash.new)
+        @route_table = options[:route_table] || RouteTable.new
+      end
       
       # Return the resource to which the given message should be delivered next
       def route message
