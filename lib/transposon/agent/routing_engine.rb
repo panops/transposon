@@ -20,6 +20,7 @@ module Transposon
       
       # Return the resource to which the given message should be delivered next
       def route message
+        available_routes = route_table.available_routes_for_message(message)
       end
     end
   end
