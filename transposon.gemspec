@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.8.15"
 
   s.add_development_dependency "rspec", "~> 2.8.0"
+  s.add_development_dependency "mocha", "~> 0.10.5"
 
   s.files = Dir.glob('{bin,lib}/**/*') + %w(LICENSE README.md ARCHITECTURE.md)
   s.executables = ['txpsn']

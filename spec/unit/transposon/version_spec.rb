@@ -53,17 +53,17 @@ describe Transposon::Version do
     end
     
     it 'has a first element which is equal to #major' do
-      described_class.should_receive(:major).once.and_return(@random_value)
+      described_class.expects(:major).once.returns(@random_value)
       subject[0].should eq(@random_value)
     end
     
     it 'has a second element which is equal to #minor' do
-      described_class.should_receive(:minor).once.and_return(@random_value)
+      described_class.expects(:minor).once.returns(@random_value)
       subject[1].should eq(@random_value)
     end
     
     it 'has a third element which is equal to #patch' do
-      described_class.should_receive(:patch).once.and_return(@random_value)
+      described_class.expects(:patch).once.returns(@random_value)
       subject[2].should eq(@random_value)
     end
     
